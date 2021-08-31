@@ -1,12 +1,14 @@
 import React from "react"
 import ButtonAppBar from "../components/AppBar"
-import HorizontalLinearStepper from "../components/Stepper"
+import HorizontalLabelPositionBelowStepper from "../components/Stepper"
 
 export default function SurveyForm(){
     return(
         <>  
             <ButtonAppBar/>
-            <HorizontalLinearStepper/>
+            <HorizontalLabelPositionBelowStepper/>
+            {/*Main Content*/}
+            {/*Button Content*/}
         </>
     )
 }

@@ -1,6 +1,6 @@
-import React from 'react';
+import React,{useState} from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles,makeStyles } from '@material-ui/core/styles';
 import Rating from '@material-ui/lab/Rating';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -12,7 +12,22 @@ import SentimentVerySatisfiedIcon from '@material-ui/icons/SentimentVerySatisfie
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
+const useStyles=makeStyles(theme=>(
+  {root:{
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent:'center',
+    alignItems:'center'
+  }}
+))
+
 const StyledRating = withStyles({
+  root:{
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent:'center',
+    alignItems:'center'
+  },
   iconFilled: {
     color: '#ff6d75',
   },
@@ -53,19 +68,25 @@ IconContainer.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-export default function CustomizedRatings() {
+export default function CustomizedRatings(props) {
+  const handleChange=e=>{setValue(e.target.value)}
+  
+  const [value,setValue]=useState(0)
+  const classes=useStyles()
   return (
-    <div>
+    <div className={classes.root}>
       <Box component="fieldset" mb={3} borderColor="transparent">
-        <Typography component="legend">Custom empty icon</Typography>
+        <Typography component="legend">{props.question}</Typography>
         <Rating
           name="customized-empty"
-          defaultValue={2}
+          defaultValue={0}
+          value={value}
           precision={0.5}
           emptyIcon={<StarBorderIcon fontSize="inherit" />}
+          onChange={handleChange}
         />
       </Box>
-      <Box component="fieldset" mb={3} borderColor="transparent">
+      {/* <Box component="fieldset" mb={3} borderColor="transparent">
         <Typography component="legend">Custom icon and color</Typography>
         <StyledRating
           name="customized-color"
@@ -74,8 +95,8 @@ export default function CustomizedRatings() {
           precision={0.5}
           icon={<FavoriteIcon fontSize="inherit" />}
         />
-      </Box>
-      <Box component="fieldset" mb={3} borderColor="transparent">
+      </Box> */}
+      {/* <Box component="fieldset" mb={3} borderColor="transparent">
         <Typography component="legend">10 stars</Typography>
         <Rating name="customized-10" defaultValue={2} max={10} />
       </Box>
@@ -87,7 +108,7 @@ export default function CustomizedRatings() {
           getLabelText={(value) => customIcons[value].label}
           IconContainerComponent={IconContainer}
         />
-      </Box>
+      </Box> */}
     </div>
   );
 }
