@@ -5,8 +5,6 @@ import HorizontalLabelPositionBelowStepper from "../components/Stepper"
 export default function SurveyForm(){
     return(
         <>  
-            <ButtonAppBar/>
-            <HorizontalLabelPositionBelowStepper/>
             {/*Main Content*/}
             {/*Button Content*/}
         </>

@@ -5,7 +5,7 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import SimplePaper from "./Paper"
+import SimplePaper from './Survey';
 import { AppContext } from '../AppContext';
 
 const useStyles = makeStyles((theme) => ({
@@ -23,48 +23,20 @@ const useStyles = makeStyles((theme) => ({
 
 export default function HorizontalLabelPositionBelowStepper(props) {
 
-  const {activeStep,surveyStep,handleBack,handleNext,handleReset,getSteps,getStepContent}=useContext(AppContext)
+  const {activeStep,surveyStep,handleBack,handleNext,handleReset,getStepperTexts,getStepContent,getSurveyQuestions}=useContext(AppContext)
 
   const classes = useStyles();
-  const steps = getSteps();
+  const steps = getStepperTexts();
 
   return (
     <div className={classes.root}>
-      <Stepper activeStep={surveyStep} alternativeLabel>
+      <Stepper activeStep={activeStep} alternativeLabel>
         {steps.map((label) => (
           <Step key={label}>
             <StepLabel>{label}</StepLabel>
           </Step>
         ))}
       </Stepper>
-      <div>
-        {surveyStep === steps.length ? (
-          <div>
-            <Typography className={classes.instructions}>All steps completed</Typography>
-            <Button onClick={handleReset}>Reset</Button>
-          </div>
-        ) : (
-          <div>
-                  {/*Paper Content*/}
-            <div>
-                <SimplePaper question={getStepContent(surveyStep)}/>
-            </div>
-            
-            <div>
-              <Button
-                disabled={surveyStep === 0}
-                onClick={handleBack}
-                className={classes.backButton}
-              >
-                Back
-              </Button>
-              <Button variant="contained" color="primary" onClick={handleNext}>
-                {surveyStep === steps.length - 1 ? 'Finish' : 'Next'}
-              </Button>
-            </div>
-          </div>
-        )}
-      </div>
     </div>
   );
 }

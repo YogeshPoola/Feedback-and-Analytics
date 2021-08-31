@@ -1,11 +1,11 @@
 import React from "react"
 import './App.css';
-import SurveyForm from "./pages/SurveyForm";
+import MainPage from "./pages/MainPage";
 
 function App() {
   return (
     <div className="App">
-      <SurveyForm/>
+      <MainPage/>
     </div>
   );
 }

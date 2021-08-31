@@ -1,6 +1,9 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import { AppContext } from '../AppContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -9,13 +12,21 @@ const useStyles = makeStyles((theme) => ({
       width: 200,
     },
   },
+  backButton: {
+    marginRight: theme.spacing(1),
+  },
+  instructions: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+  },
 }));
 
 export default function ValidationTextFields() {
   const classes = useStyles();
+  const {handleNextPage} = useContext(AppContext)
 
   return (
-    <form className={classes.root} noValidate autoComplete="off">
+    <form className={classes.root} noValidate autoComplete="off" onSubmit={handleNextPage}>
       <div>
         <TextField error id="standard-error" label="Error" defaultValue="Hello World" />
         <TextField
@@ -59,6 +70,15 @@ export default function ValidationTextFields() {
           helperText="Incorrect entry."
           variant="outlined"
         />
+      </div>
+      <div>
+      <Button
+        type="submit"
+        variant="contained" 
+        color="primary"
+        >
+        Head to Survey
+        </Button>
       </div>
     </form>
   );
