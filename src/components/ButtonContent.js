@@ -6,7 +6,8 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      width: '100%',
+      height:theme.spacing(8),
+      margin: '0',
     },
     backButton: {
       marginRight: theme.spacing(1),
@@ -19,9 +20,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ButtonContent(){
     const classes=useStyles()
-    const {surveyStep,handleBack,handleNext,handleReset}=useContext(AppContext)
+    const {surveyStep,surveyQuestions,handleBack,handleNext,handleReset,handleNextPage}=useContext(AppContext)
+    const steps=surveyQuestions
     return(
-        <div>
+        <div className={classes.root}>
             {surveyStep === steps.length ? (
             <div>
                 <Typography className={classes.instructions}>All steps completed</Typography>
@@ -37,9 +39,16 @@ export default function ButtonContent(){
                 >
                     Back
                 </Button>
-                <Button variant="contained" color="primary" onClick={handleNext}>
-                    {surveyStep === steps.length - 1 ? 'Finish' : 'Next'}
+
+                {surveyStep === steps.length - 1 ? (
+                    <Button variant="contained" color="primary" onClick={handleNextPage}>
+                    Finish
                 </Button>
+                ) : (
+                    <Button variant="contained" color="primary" onClick={handleNext}>
+                    Next
+                </Button>
+                )}
                 </div>
             </div>
             )}

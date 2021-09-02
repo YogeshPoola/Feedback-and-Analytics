@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useContext} from 'react';
 import PropTypes from 'prop-types';
 import { withStyles,makeStyles } from '@material-ui/core/styles';
 import Rating from '@material-ui/lab/Rating';
@@ -11,13 +11,16 @@ import SentimentSatisfiedAltIcon from '@material-ui/icons/SentimentSatisfiedAltO
 import SentimentVerySatisfiedIcon from '@material-ui/icons/SentimentVerySatisfied';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import { AppContext } from '../AppContext';
 
 const useStyles=makeStyles(theme=>(
   {root:{
     display: 'flex',
     flexWrap: 'wrap',
+    flexDirection:'column',
     justifyContent:'center',
-    alignItems:'center'
+    alignItems:'center',
+    marginBottom:'0'
   }}
 ))
 
@@ -70,13 +73,13 @@ IconContainer.propTypes = {
 
 export default function CustomizedRatings(props) {
   const handleChange=e=>{setValue(e.target.value)}
-  
   const [value,setValue]=useState(0)
   const classes=useStyles()
+  const {surveyStep,getSurveyQuestions} =useContext(AppContext)
   return (
     <div className={classes.root}>
-      <Box component="fieldset" mb={3} borderColor="transparent">
-        <Typography component="legend">{props.question}</Typography>
+      <Box component="fieldset" mb={3} borderColor="transparent" className={classes.root}>
+        <Typography variant="h6">{getSurveyQuestions(surveyStep)}</Typography>
         <Rating
           name="customized-empty"
           defaultValue={0}
