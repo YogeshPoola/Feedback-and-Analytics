@@ -6,6 +6,7 @@ import SimpleSelect from '../inputs/Select';
 import ValidationTextFields from '../inputs/TextField';
 import MaterialUIPickers from '../inputs/Calendar';
 
+
 //Styles
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,14 +24,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
 export default function Details() {
   const classes = useStyles();
   const {handleNextPage,initialInputValues,inputValues} = useContext(AppContext)
 
   return (
-    <form className={classes.root} onSubmit={handleNextPage}>
+    
+       <form className={classes.root} onSubmit={handleNextPage}>
       
       <ValidationTextFields/>
 

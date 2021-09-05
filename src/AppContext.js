@@ -2,7 +2,8 @@ import React,{useState} from "react"
 import Details from "./pages/Details"
 import SimplePaper from "./components/Survey"
 import Thankyou from "./pages/Thankyou"
-
+import Suggestion from "./pages/Suggestions"
+import firebaseDB from "./firebase"
 const AppContext=React.createContext()
 
 function AppContextProvider(props){
@@ -26,7 +27,11 @@ function AppContextProvider(props){
     const [inputValues,setInputValues]=useState({
       userName:"",
       age:"",
-      region:""
+      region:"",
+      q1:"",
+      q2:"",
+      q3:"",
+      suggestionText:""
       // broughtDate:""  
     }
   )
@@ -43,20 +48,22 @@ function AppContextProvider(props){
             },
             page2:{
                 text:"",
-                comp:<Thankyou/>
-            }
-        },
-        analyticsPage:{
+                comp:<Suggestion/>
+            },
+            page3:{
+              text:"",
+              comp:<Thankyou/>
         }
     }
-    const validationObject=
-          {
-          ageValidation:inputValues.age==="" ? "Please select Age group" : "",
-          regionValidation:inputValues.region==="" ? "Please select a region" : ""
+  }
+  
+    const validationObject={
+          ageValidation:inputValues.age,
+          regionValidation:inputValues.region
           }
     //Methods
     function getStepperTexts() {
-        return ['User Details', 'Complete the Survey', 'Submit'];
+        return ['User Details', 'Complete the Survey', 'Finish'];
       }
     
     function getCurrentPage(stepIndex) {
@@ -67,6 +74,8 @@ function AppContextProvider(props){
             return allPages.surveyPages.page1.comp;
           case 2:
             return allPages.surveyPages.page2.comp;
+          case 3:
+            return allPages.surveyPages.page3.comp;
           default:
             return 'Unknown stepIndex';
         }
@@ -85,6 +94,19 @@ function AppContextProvider(props){
           }
     }
 
+    function getSurveyQuestionKey(stepIndex){
+      switch (stepIndex) {
+          case 0:
+            return 'q1';
+          case 1:
+            return 'q2';
+          case 2:
+            return 'q3';
+          default:
+            return 'Unknown stepIndex';
+        }
+  }
+
       const handleChange = (event) => {
         const {name,value}=event.target
         setInputValues({
@@ -94,6 +116,7 @@ function AppContextProvider(props){
       };
   
       const handleNext = () => {
+        console.log(inputValues)
         setSurveyStep((prevSurveyStep) => prevSurveyStep + 1);
       };
     
@@ -106,33 +129,53 @@ function AppContextProvider(props){
       };
 
       const handleValidation=()=>{
-        console.log("inside handleValidation")
-        console.log(validationObject)
-        return Object.values(validationObject).includes("")
+        return Object.values(validationObject).includes('')
+      }
+
+      const submitData=(obj)=>{
+        console.log('submitting...')
+        firebaseDB.child('feedbackMain').push(obj,
+          err=>{
+            if(err){
+              console.log('error pushing to DB')
+            }
+          })
+        
       }
 
       const handleNextPage = (e) => {
-        console.log(activeStep)
+        console.log(inputValues)
         e.preventDefault()
         if(activeStep===0){
-          if(handleValidation()===false){
-            console.log("validation running")
+          if(handleValidation()===true){
             setIsError(true)
           }
           else{
-            console.log("No validation running")
             setActiveStep((prevActiveStep) => prevActiveStep + 1)
           }
+        }else if(activeStep===3){
+          submitData(inputValues)
+          setInputValues({
+            userName:"",
+            age:"",
+            region:"",
+            q1:"",
+            q2:"",
+            q3:"",
+            suggestionText:""
+            // broughtDate:""  
+          })
+          setActiveStep(0)
+          setSurveyStep(0)
         }
         else{
-          console.log("Validation Skipped")
         setActiveStep((prevActiveStep) => prevActiveStep + 1)
         }
       };      
 
     //Render
     return(
-        <AppContext.Provider value={{activeStep,surveyStep,surveyQuestions,initialInputValues,inputValues,isError,setActiveStep,setSurveyStep,getStepperTexts,getSurveyQuestions,getCurrentPage,handleChange,handleNext,handleBack,handleReset,handleNextPage}}>
+        <AppContext.Provider value={{activeStep,surveyStep,surveyQuestions,initialInputValues,inputValues,isError,setActiveStep,setSurveyStep,getStepperTexts,getSurveyQuestions,getSurveyQuestionKey,getCurrentPage,handleChange,handleNext,handleBack,handleReset,handleNextPage,submitData}}>
             {props.children}
         </AppContext.Provider>
     )

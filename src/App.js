@@ -1,12 +1,19 @@
 import React from "react"
 import './App.css';
 import MainPage from "./pages/MainPage";
+import { Switch,Route } from "react-router"
+import Suggestion from "./pages/Suggestions";
 
 function App() {
   return (
-    <div className="App">
+    <Switch>
+    <Route exact path="/">
       <MainPage/>
-    </div>
+    </Route>
+    <Route exact path="/blah">
+      <Suggestion/>
+    </Route>
+    </Switch>
   );
 }
 

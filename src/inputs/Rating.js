@@ -72,18 +72,17 @@ IconContainer.propTypes = {
 };
 
 export default function CustomizedRatings(props) {
-  const handleChange=e=>{setValue(e.target.value)}
   const [value,setValue]=useState(0)
   const classes=useStyles()
-  const {surveyStep,getSurveyQuestions} =useContext(AppContext)
+  const {surveyStep,getSurveyQuestions,getSurveyQuestionKey,inputValues,handleChange} =useContext(AppContext)
   return (
     <div className={classes.root}>
       <Box component="fieldset" mb={3} borderColor="transparent" className={classes.root}>
         <Typography variant="h6">{getSurveyQuestions(surveyStep)}</Typography>
         <Rating
-          name="customized-empty"
+          name={getSurveyQuestionKey(surveyStep)}
           defaultValue={0}
-          value={value}
+          value={inputValues[getSurveyQuestionKey(surveyStep)]}
           precision={0.5}
           emptyIcon={<StarBorderIcon fontSize="inherit" />}
           onChange={handleChange}

@@ -9,10 +9,10 @@ import { AppContext } from "../AppContext"
 export default function MainPage(){
     const {activeStep,getCurrentPage} = useContext(AppContext)
     return(
-        <>
+        <div className="App">
             <ButtonAppBar/>
             <HorizontalLabelPositionBelowStepper/>
             {getCurrentPage(activeStep)}
-        </>
+        </div>
     )
 }
