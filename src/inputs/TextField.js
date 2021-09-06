@@ -1,8 +1,10 @@
-import React from "react"
+import React,{useContext} from "react"
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+import {AppContext} from "../AppContext"
 
 export default function ValidationTextFields(){
+    const {handleChange,inputValues}=useContext(AppContext)
     return(
         <>
         <div>
@@ -17,6 +19,9 @@ export default function ValidationTextFields(){
           label="Full Name"
           defaultValue=""
           helperText="Optional"
+          name="userName"
+          onChange={handleChange}
+          value={inputValues.userName}
         />
       </div>
         </>

@@ -16,9 +16,11 @@ function AppContextProvider(props){
   }
 
   const surveyQuestions=[
-    'What the hell dudes...',
-    'Hola Sompros?',
-    'Gusta mata Gista!',
+    'How much do you rate the quality of the product',
+    'Rate the delivery of the product',
+    'How would you rate the value for the money of the product',
+    'How likely do you recommend the product to your friend',
+    'Please rate the Customer Service provided by us'
 ]
   
     //States
@@ -61,6 +63,14 @@ function AppContextProvider(props){
           ageValidation:inputValues.age,
           regionValidation:inputValues.region
           }
+
+    const questionsObj={
+      q1:surveyQuestions[0],
+      q2:surveyQuestions[1],
+      q3:surveyQuestions[2],
+      q4:surveyQuestions[3],
+      q5:surveyQuestions[4]
+    }
     //Methods
     function getStepperTexts() {
         return ['User Details', 'Complete the Survey', 'Finish'];
@@ -89,6 +99,10 @@ function AppContextProvider(props){
               return surveyQuestions[1];
             case 2:
               return surveyQuestions[2];
+              case 3:
+                return surveyQuestions[3];
+                case 4:
+                  return surveyQuestions[4];
             default:
               return 'Unknown stepIndex';
           }
@@ -102,6 +116,10 @@ function AppContextProvider(props){
             return 'q2';
           case 2:
             return 'q3';
+            case 3:
+              return 'q4';
+              case 4:
+            return 'q5';
           default:
             return 'Unknown stepIndex';
         }
@@ -153,7 +171,7 @@ function AppContextProvider(props){
           else{
             setActiveStep((prevActiveStep) => prevActiveStep + 1)
           }
-        }else if(activeStep===3){
+        }else if(activeStep===2){
           submitData(inputValues)
           setInputValues({
             userName:"",
@@ -165,17 +183,21 @@ function AppContextProvider(props){
             suggestionText:""
             // broughtDate:""  
           })
-          setActiveStep(0)
+          setActiveStep((prevActiveStep) => prevActiveStep + 1)
+          console.log(`inside loop ${activeStep}`)
           setSurveyStep(0)
         }
+        else if(activeStep===3){
+          setActiveStep(0)
+        }
         else{
-        setActiveStep((prevActiveStep) => prevActiveStep + 1)
+          setActiveStep((prevActiveStep) => prevActiveStep + 1)
         }
       };      
 
     //Render
     return(
-        <AppContext.Provider value={{activeStep,surveyStep,surveyQuestions,initialInputValues,inputValues,isError,setActiveStep,setSurveyStep,getStepperTexts,getSurveyQuestions,getSurveyQuestionKey,getCurrentPage,handleChange,handleNext,handleBack,handleReset,handleNextPage,submitData}}>
+        <AppContext.Provider value={{activeStep,surveyStep,surveyQuestions,initialInputValues,inputValues,questionsObj,isError,setActiveStep,setSurveyStep,getStepperTexts,getSurveyQuestions,getSurveyQuestionKey,getCurrentPage,handleChange,handleNext,handleBack,handleReset,handleNextPage,submitData}}>
             {props.children}
         </AppContext.Provider>
     )
