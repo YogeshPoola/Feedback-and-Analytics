@@ -10,7 +10,7 @@ export default function MainPage(){
     const {activeStep,getCurrentPage} = useContext(AppContext)
     return(
         <div className="App">
-            <ButtonAppBar barColor="inherit" mainText="Feedback Page" buttonText="Analytics Page" linkTo="analytics"/>
+            <ButtonAppBar barColor="primary" btnColor="secondary" mainText="Feedback Page" buttonText="Analytics Page" linkTo="analytics"/>
             <HorizontalLabelPositionBelowStepper/>
             {getCurrentPage(activeStep)}
         </div>

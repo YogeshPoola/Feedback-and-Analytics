@@ -26,7 +26,7 @@ export default function Thankyou(){
                 </Button>
                 <Link to="/analytics" style={{ textDecoration: 'none',background:'white',color:'blue' }}>
                 <Button variant="contained" color="secondary">
-                    Survey Analytics
+                    Feedback Analytics
                 </Button>
                 </Link>
             </Box>

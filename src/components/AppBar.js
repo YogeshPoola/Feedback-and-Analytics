@@ -18,15 +18,16 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    marginLeft:theme.spacing(15)
   },
 }));
 
 export default function ButtonAppBar(props) {
-  const {barColor,mainText,buttonText,linkTo}=props
+  const {barColor,btnColor,mainText,buttonText,linkTo}=props
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" color={barColor}>
         <Toolbar>
           {/* <IconButton edge="start" className={classes.menuButton} color={barColor} aria-label="menu">
             <MenuIcon />
@@ -35,7 +36,7 @@ export default function ButtonAppBar(props) {
             {mainText}
           </Typography>
           <Link to={`/${linkTo}`} style={{ textDecoration: 'none' ,background:'white',color:'blue'}}>
-            <Button color="secondary">{buttonText}</Button>
+            <Button color={btnColor}>{buttonText}</Button>
           </Link>
         </Toolbar>
       </AppBar>

@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
         textAlign:'center'
     },
     paperCustom: {
+        flexGrow: 1,
         padding: theme.spacing(10),
         textAlign: 'center',
         color: theme.palette.text.secondary,
@@ -82,19 +83,25 @@ export default function AnalyticsPage(){
     const q5Array=allFeedbacks.map(item=>item.q5)
         //Array Sum Reduce
     const reduceSum=(accumulator,input)=>accumulator+parseFloat(input)
-    const avgQ1=(q1Array.reduce(reduceSum,0)/(5*totalFeedbacks))*5
-    const avgQ2=(q2Array.reduce(reduceSum,0)/(5*totalFeedbacks))*5
-    const avgQ3=(q3Array.reduce(reduceSum,0)/(5*totalFeedbacks))*5
-    const avgQ4=(q4Array.reduce(reduceSum,0)/(5*totalFeedbacks))*5
-    const avgQ5=(q5Array.reduce(reduceSum,0)/(5*totalFeedbacks))*5
+    const avgQ1=((q1Array.reduce(reduceSum,0)/(5*totalFeedbacks))*5).toFixed(1)
+    const avgQ2=((q2Array.reduce(reduceSum,0)/(5*totalFeedbacks))*5).toFixed(1)
+    const avgQ3=((q3Array.reduce(reduceSum,0)/(5*totalFeedbacks))*5).toFixed(1)
+    const avgQ4=((q4Array.reduce(reduceSum,0)/(5*totalFeedbacks))*5).toFixed(1)
+    const avgQ5=((q5Array.reduce(reduceSum,0)/(5*totalFeedbacks))*5).toFixed(1)
     const questionAvgArray=[avgQ1,avgQ2,avgQ3,avgQ4,avgQ5]
+
+    //Chart Colors
+    const bgColor1=['#3F51B5','#F50057','#FFC234']
+    const bgColor2=['#3F51B5','#F50057','#FFC234','#66ff66','#474647']
+
     //Chart Data
     const regionData={
         labels:['Village','Town','City'],
         datasets:[
             {
                 label:'Region Demographics',
-                data:regionGroupsArray
+                data:regionGroupsArray,
+                backgroundColor:bgColor1,
             }
         ]
     }
@@ -103,7 +110,8 @@ export default function AnalyticsPage(){
         datasets:[
             {
                 label:'Age Demographics',
-                data:ageGroupsArray
+                data:ageGroupsArray,
+                backgroundColor:bgColor1,
             }
         ]
     }
@@ -113,21 +121,39 @@ export default function AnalyticsPage(){
             {   
                 axis:'y',
                 label:'Average Customer Ratings',
-                data:questionAvgArray
+                data:questionAvgArray,
+                backgroundColor:bgColor2,
             }
         ]
     }
-    const ChartOptions={
-        maintainAspectRatio: false
+    const Chart1Options={
+        maintainAspectRatio: false,
+        plugins: {
+            subtitle: {
+                display: true,
+                text: 'Customers from different Regions'
+            }
+        }
+    }
+    const Chart2Options={
+        maintainAspectRatio: false,
+        plugins: {
+            subtitle: {
+                display: true,
+                text: 'Customers from different Ages'
+            }
+        }
     }
     const questionsChartOptions={
         indexAxis: 'y'
     }
+
+
     return(
     <div className={classes.root}>
-        <ButtonAppBar barColor="secondary" mainText="Analytics Page" buttonText="Feedback Page" linkTo=""/>
+        <ButtonAppBar barColor="secondary" btnColor="primary" mainText="Analytics Page" buttonText="Feedback Page" linkTo=""/>
         <Typography variant="h4" gutterBottom className={classes.text}>
-        User Demographics
+        Customer Analytics
       </Typography>
       <Grid container spacing={3} className={classes.grid}>
         <Grid item xs={6}>
@@ -136,7 +162,7 @@ export default function AnalyticsPage(){
               	width={300}
                   height={300}
               data={regionData}
-              options={ChartOptions}
+              options={Chart1Options}
               />
           </Paper>
         </Grid>
@@ -146,7 +172,7 @@ export default function AnalyticsPage(){
                             	width={300}
                                 height={300}
                 data={ageData}
-                options={ChartOptions}
+                options={Chart2Options}
               />
           </Paper>
         </Grid>
