@@ -153,6 +153,9 @@ export default function AnalyticsPage(){
     return(
     <div className={classes.root}>
         <ButtonAppBar barColor="secondary" btnColor="primary" mainText="Analytics Page" buttonText="Feedback Page" linkTo=""/>
+        <Typography variant="h5" gutterBottom className={classes.text}>
+            Total no.of Feedbacks : <span style={{color:'#3F51B5',fontWeight:'bolder'}}> {totalFeedbacks} </span>
+        </Typography>
         <Typography variant="h4" gutterBottom className={classes.text}>
         Customer Analytics
       </Typography>
