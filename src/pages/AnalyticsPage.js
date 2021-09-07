@@ -71,9 +71,10 @@ export default function AnalyticsPage(){
 
     //Age Demographics
     const totalYoungAge=allFeedbacks.filter(item=>item.age=='0-18').length
-    const totalMiddleAge=allFeedbacks.filter(item=>item.age=='18-30').length
-    const totalOldAge=allFeedbacks.filter(item=>item.age=='30-50').length
-    const ageGroupsArray=[totalYoungAge,totalMiddleAge,totalOldAge]
+    const totalYouthAge=allFeedbacks.filter(item=>item.age=='18-30').length
+    const totalMiddleAge=allFeedbacks.filter(item=>item.age=='30-50').length
+    const totalOldAge=allFeedbacks.filter(item=>item.age=='50+').length
+    const ageGroupsArray=[totalYoungAge,totalYouthAge,totalMiddleAge,totalOldAge]
 
     //Q's Analytics
     const q1Array=allFeedbacks.map(item=>item.q1)
@@ -106,12 +107,12 @@ export default function AnalyticsPage(){
         ]
     }
     const ageData={
-        labels:['0-18','18-30','30-50'],
+        labels:['0-18','18-30','30-50','50+'],
         datasets:[
             {
                 label:'Age Demographics',
                 data:ageGroupsArray,
-                backgroundColor:bgColor1,
+                backgroundColor:bgColor2,
             }
         ]
     }
