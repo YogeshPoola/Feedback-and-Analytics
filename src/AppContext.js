@@ -189,6 +189,7 @@ function AppContextProvider(props){
         }
         else if(activeStep===3){
           setActiveStep(0)
+          setIsError(false)
         }
         else{
           setActiveStep((prevActiveStep) => prevActiveStep + 1)
